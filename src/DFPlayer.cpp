@@ -1122,11 +1122,12 @@ void DFPlayer::_sendData(uint8_t command, uint8_t dataMSB, uint8_t dataLSB)
     
     case DFPLAYER_MP3_TF_16P:
       checksum = 0xffff;    //0xFFFF, DON'T TOUCH!!!
-      if((_dataBuffer[5] + _dataBuffer[6]) < 0x03e8){   /* When the file number is < 1000 */
-        checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5]);
-      }else{ /* For MP3 and Advert Folders When the file number is > 999 */
-        checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5] + _dataBuffer[6]);
-      }
+      val = ((_dataBuffer[5] & 0xFF) << 8) | _dataBuffer[6] & 0xFF;
+        #if (val < 1000)                                                /* When the file number is < 1000 */
+          checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5]);
+        #else                                                         /* When the file number is >= 1000 */
+          checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5] + _dataBuffer[6]);
+        #endif
       checksum += 1;
       break;
 
