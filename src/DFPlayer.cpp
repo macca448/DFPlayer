@@ -1105,7 +1105,7 @@ void DFPlayer::_sendData(uint8_t command, uint8_t dataMSB, uint8_t dataLSB)
   _dataBuffer[5] = dataMSB;
   _dataBuffer[6] = dataLSB;
 
-  int16_t checksum;
+  int16_t checksum, val;
 
   switch (_moduleType)
   {
