@@ -108,7 +108,9 @@ typedef enum : uint8_t
   DFPLAYER_MINI        = 0x00, //DFPlayer Mini, MP3-TF-16P, FN-M16P (YX5200 chip, YX5300 chip or JL AAxxxx chip from Jieli)
   DFPLAYER_FN_X10P     = 0x01, //FN-M10P, FN-S10P (FN6100 chip)
   DFPLAYER_HW_247A     = 0x02, //DFPlayer Mini HW-247A (GD3200B chip)
-  DFPLAYER_NO_CHECKSUM = 0x03  //no checksum calculation, not recomended for MCU without external crystal oscillator
+  DFPLAYER_MP3_TF_16P  = 0x03, //MP3-TF-16P MP3 Mini Player (MH2024K-16SS chip)
+  DFPLAYER_NO_CHECKSUM = 0x04  //no checksum calculation, not recomended for MCU without external crystal oscillator
+  
 }
 DFPLAYER_MODULE_TYPE;
 
