@@ -188,7 +188,7 @@ void DFPlayer::setSource(uint8_t source)
     - files in the root must start with 4 decimal digits with leading zeros
       - example: SD_ROOT/0001 - My favorite song.mp3
     - don’t copy 0003.mp3 & then 0001.mp3, because 0003.mp3 will be
-      played firts
+      played first
 */
 /**************************************************************************/
 void DFPlayer::playTrack(uint16_t track)
@@ -1118,6 +1118,16 @@ void DFPlayer::_sendData(uint8_t command, uint8_t dataMSB, uint8_t dataLSB)
     case DFPLAYER_FN_X10P:
       checksum = 35535;    //0xFFFF, DON'T TOUCH!!!
       checksum = checksum - _dataBuffer[1] - _dataBuffer[2] - _dataBuffer[3] - _dataBuffer[4] - _dataBuffer[5] - _dataBuffer[6] + 1;
+      break;
+    
+    case DFPLAYER_MP3_TF_16P:
+      checksum = 0xffff;    //0xFFFF, DON'T TOUCH!!!
+      if((_dataBuffer[5] + _dataBuffer[6]) < 0x03e8){   /* When the file number is < 1000 */
+        checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5]);
+      }else{ /* For MP3 and Advert Folders When the file number is > 999 */
+        checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5] + dataBuffer[6]);
+      }
+      checksum += 1;
       break;
 
     case DFPLAYER_NO_CHECKSUM:
