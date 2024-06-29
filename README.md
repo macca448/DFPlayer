@@ -1,5 +1,6 @@
 ### This fork of [Enjoyneering's](https://github.com/enjoyneering/DFPlayer) DFPlayer adds `checksum` support for the `MH2004K-16SS` chip based players 
 #### MODEL: `(MP3-TF-16P)`
+![alt text](https://github.com/macca448/DFPlayer/blob/main/images/mh2024K_16SS.png)
 #### See `ESP_HW_Serial_MP3_TF_16P` example
 ```c++
 mp3.begin(Serial2, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
@@ -8,14 +9,16 @@ mp3.begin(Serial2, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 All features seem the same as ather oodels except the documentation for the chip suggests the **`MP3 & ADVERT'** folders support up to 0xFFFF (65,535) file count. Only tested with 0x03b8 (1000)
 #### TEST HARDWARE USED: ESP32 & RX2/TX2 HARDWARE SERIAL2 CONNECTION.
 
-*
-*
-*
-*
-*
-
-
-[![license-badge][]][license] ![version] [![stars][]][stargazers] ![hit-count] [![github-issues][]][issues]
+#### TEST SD CARD FILE TREE
+![alt text](https://github.com/macca448/DFPlayer/blob/main/images/sd_file_tree.png)
+<br>
+<br>
+#### END UPDATE
+<br>
+<br>
+<br>
+<br>
+<br>
 
 # DFPlayer Mini
 This is small and fast Arduino library for:
