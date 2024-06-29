@@ -6,8 +6,9 @@
 mp3.begin(Serial2, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 ```
 #### FEATURES:
-All features seem the same as ather oodels except the documentation for the chip suggests the **`MP3 & ADVERT'** folders support up to 0xFFFF (65,535) file count. Only tested with 0x03b8 (1000)
-#### TEST HARDWARE USED: ESP32 & RX2/TX2 HARDWARE SERIAL2 CONNECTION.
+All features seem the same as as all the other models except the documentation for the chip suggests the **`MP3 & ADVERT'** folders support up to 0xFFFF (65,535) file count. Only tested with 0x03b8 (1000). I have included the original Chinese and Google translated datasheet PDF's in the assets folder.
+#### TEST HARDWARE USED: 
+ESP32 & RX2/TX2 HARDWARE SERIAL2 CONNECTION.
 
 #### TEST SD CARD FILE TREE
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/sd_file_tree.png)
