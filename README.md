@@ -8,13 +8,21 @@ mp3.begin(Serial2, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 #### FEATURES:
 All features seem the same as as all the other models except the documentation for the chip suggests the **`MP3 & ADVERT'** folders support up to 0xFFFF (65,535) file count. Only tested with 0x03b8 (1000). I have included the original Chinese and Google translated datasheet PDF's in the assets folder.
 #### TEST HARDWARE USED: 
-ESP32 & RX2/TX2 HARDWARE SERIAL2 CONNECTION.
+**ESP32 OR ESP8266 & RX2/TX2 HARDWARE SERIAL2 CONNECTION.**
+![alt text](https://github.com/macca448/DFPlayer/blob/main/images/MP3_TF_16P_ESP_wiring.png)
+<br>
+#### CAUTION:
+
+```
+I found that on one of my ESP32 dev's the MP3-TF-16P would keep causing a RESET and
+restart the ESP when a file was asked to play. Using an external 5VDC PSU fixed the problem.
+```
 
 #### TEST SD CARD FILE TREE
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/sd_file_tree.png)
 <br>
 <br>
-#### END UPDATE
+#### END MP3-TF-16P UPDATE
 <br>
 <br>
 <br>
