@@ -1142,6 +1142,7 @@ void DFPlayer::_sendData(uint8_t command, uint8_t dataMSB, uint8_t dataLSB)
     case DFPLAYER_MINI:
     case DFPLAYER_FN_X10P:
     case DFPLAYER_HW_247A:
+    case DFPLAYER_MP3_TF_16P:
       _dataBuffer[7] = checksum >> 8;
       _dataBuffer[8] = checksum;
 
