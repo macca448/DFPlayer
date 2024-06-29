@@ -1125,7 +1125,7 @@ void DFPlayer::_sendData(uint8_t command, uint8_t dataMSB, uint8_t dataLSB)
       if((_dataBuffer[5] + _dataBuffer[6]) < 0x03e8){   /* When the file number is < 1000 */
         checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5]);
       }else{ /* For MP3 and Advert Folders When the file number is > 999 */
-        checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5] + dataBuffer[6]);
+        checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5] + _dataBuffer[6]);
       }
       checksum += 1;
       break;
