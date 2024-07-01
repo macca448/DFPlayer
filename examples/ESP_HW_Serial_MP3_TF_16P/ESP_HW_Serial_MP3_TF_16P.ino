@@ -1,11 +1,21 @@
 /***************************************************************************************************/
 /*
-   This Sketch uses "Checksum" packet validation for the MP3-TF-16P that uses the MH2024K-16SS chip.
-   Assumes an ESP32 or ESP8266 with HW Serial2 as the connection to the MP3-TF-16P
+   This Sketch uses "Checksum" packet validation for the GD3200B (MH2024K-16SS) chipset.
+   The GD3200B is the replacement for the YX5200
+   The player model is MP3-TF-16P and underneath you will see the MH2024K-16SS chip
+
+   This sketch assumes an ESP32 or ESP8266 with HW Serial as the connection to the MP3-TF-16P
+   Power the Player with +5V. It's logic TX/RX is 3v3 so you can conndirect ESP TX2 to Player RX and ESP RX2 to Player TX
+
+   There is no reason you can't use this for different DFplaers just change the "DFPLAYER_MP3_TF_16P" 
+   in the mp3.begin() to a definition that suits your device.
 
    written by :             macca448
    source code:             https://github.com/macca448/DFPlayer
-
+  
+  ********************************************************************************************************
+  ********************************************************************************************************
+  
    Original Library Author: enjoyneering < https://github.com/enjoyneering >
   
    DFPlayer Mini features:
@@ -28,17 +38,21 @@
 */
 /***************************************************************************************************/
 
-#include "DFPlayer.h"
+#include <DFPlayer.h>
 
+#if defined (ESP32)
+  #define MP_SERIAL Serial2
+#elif defined (ESP8266)
+  #define MP_SERIAL Serial1
+#endif
 
 #define MP3_SERIAL_SPEED    9600 //DFPlayer Mini suport only 9600-baud
 #define MP3_SERIAL_TIMEOUT  350  //average DFPlayer response timeout 200msec..300msec for YX5200/AAxxxx chip & 350msec..500msec for GD3200B/MH2024K chip
 
 uint32_t lastPeriod = 0;
-bool print = true;
+bool print = false, menu = 0;
 
-DFPlayer mp3;                    //connect DFPlayer RX-pin to ESP32 GPIO17(TX2) & DFPlayer TX-pin to ESP32 GPIO16(RX2)
-                                 //connect DFPlayer RX-pin to ESP8266 GPIO15(TX2) & DFPlayer TX-pin to ESP8266 GPIO13(RX2)
+DFPlayer mp3;                    //connect DFPlayer RX-pin to GPIO15(TX) & DFPlayer TX-pin to GPIO13(RX)
 
 
 /**************************************************************************/
@@ -74,9 +88,9 @@ DFPlayer mp3;                    //connect DFPlayer RX-pin to ESP32 GPIO17(TX2) 
 void setup()
 {
   Serial.begin(115200);                       //Serial Monitor Input and Feedback
-  Serial2.begin(MP3_SERIAL_SPEED);            //ESP32 RX2(gpio16) TX2(gpio17)   ESP8266 RX2(gpio13) TX2(gpio15)
+  MP_SERIAL.begin(MP3_SERIAL_SPEED);            //ESP32 RX2(gpio16) TX2(gpio17)   ESP8266 RX2(gpio13) TX2(gpio15)
 
-  mp3.begin(Serial2, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false); //"DFPLAYER_MP3_TF_16P" see NOTE, false=no feedback from module after the command
+  mp3.begin(MP_SERIAL, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false); //"DFPLAYER_MP3_TF_16P" see NOTE, false=no feedback from module after the command
 
   delay(1000);
 
@@ -90,29 +104,40 @@ void setup()
 
   //mp3.setFeedback(true);               //enable=request feedback to return not only errors but also OK statuses
 
-  printMenu();
+  printMenu(0);
   //mp3.wakeup(2);                      //exit standby mode & initialize sourse 1=USB-Disk, 2=TF-Card, 3=Aux, 5=NOR Flash
 }
 
-void printMenu(void){
-  Serial.println("\nMENU");
-  Serial.println("Send = The Item");
-  Serial.println("  D  = Get current status");
-  Serial.println("  s  = Stop current file");
-  Serial.println("  1  = Root DIR File 001");
-  Serial.println("  2  = Root DIR File 002");
-  Serial.println("  b  = DIR 01 File 001");
-  Serial.println("  c  = DIR 01 File 002");
-  Serial.println("  m  = DIR MP3 File 001");
-  Serial.println("  M  = DIR MP3 File 1000");
-  Serial.println("  a  = DIR ADVERT File 001");
-  Serial.println("  A  = DIR ADVERT File 1000");
-  Serial.println("  p  = Pause curent mp3");
-  Serial.println("  P  = Play curent mp3");
-  Serial.println("  v  = Set Volume to 30/30");
-  Serial.println("  w  = Set Volume to 25/30");
-  Serial.println("  x  = Set Volume to 20/30");
-  Serial.println("  r  = Reset Device\n");
+void printMenu(bool list){
+  if(list){
+    Serial.println("\n  FILE    MENU");
+    Serial.println("  Send  = The Item");
+    Serial.println("C || c  = Print Command List");
+    Serial.println("    z1  = Root DIR File 001"); 
+    Serial.println("    z2  = Root DIR File 002");
+    Serial.println("  z255  = Root DIR File 255");
+    Serial.println("  f011  = DIR 01 File 001");
+    Serial.println("  f012  = DIR 01 File 002");
+    Serial.println("f01255  = DIR 01 File 255");
+    Serial.println("  f991  = DIR 99 File 001");
+    Serial.println("  f992  = DIR 99 File 002");
+    Serial.println(" f99255 = DIR 99 File 255");
+    Serial.println("    m1  = DIR MP3 File 0001");
+    Serial.println(" m1000  = DIR MP3 File 1000");
+    Serial.println(" m9999  = DIR MP3 File 9999");
+    Serial.println("    a1  = DIR ADVERT File 0001");
+    Serial.println(" a1000  = DIR ADVERT File 1000");
+    Serial.println(" a9999  = DIR ADVERT File 9999\n");
+  }else{
+    Serial.println("\nCOMMAND   MENU");
+    Serial.println("L || l  = Print File list");
+    Serial.println("D || d  = Get current status");
+    Serial.println("S || s  = Stop current file");
+    Serial.println("P || p  = Pause curent play");
+    Serial.println("R || r  = Resume curent play");
+    Serial.println("Vxx vXX = Set Volume Level 01 - 30");
+    Serial.println("     $  = Reset Device\n");
+  }
   print = false;
 }
 
@@ -125,62 +150,61 @@ void printMenu(void){
  /**************************************************************************/
 void loop(){ 
   if(print){
-    if(millis() - lastPeriod >= 500){                  //This avoid's printing the menu twice
-      printMenu();
+    if(millis() - lastPeriod >= 1000){                  //This avoid's printing the menu twice
+      printMenu(menu);
     }
   }
   if(Serial.available() > 0){
-    char inChar = Serial.read();
-    print = true;
-    lastPeriod = millis();
-      if(inChar == '1'){
-        mp3.playTrack(1);
-        Serial.println("Root DIR File 001");
-      }else if(inChar == '2'){
-        mp3.playTrack(2);
-        Serial.println("Jet Engine Shut-Down Playing");
-      }else if(inChar == 'b'){
-        mp3.playFolder(1, 1);
-        Serial.println("Folder 01 File 001");
-      }else if(inChar == 'c'){
-        mp3.playFolder(1, 2);
-        Serial.println("Folder 01 File 002");
-      }else if(inChar == 'm'){
-        mp3.playMP3Folder(1);
-        Serial.println("Folder MP3 File 0001");
-      }else if(inChar == 'M'){
-        mp3.playMP3Folder(1000);
-        Serial.println("Folder MP3 File 1000");
-      }else if(inChar == 'a'){
-        mp3.playAdvertFolder(1);
-        Serial.println("Folder Advert File 0001");
-      }else if(inChar == 'A'){
-        mp3.playAdvertFolder(1000);
-        Serial.println("Folder Advert File 1000");
-      }else if(inChar == 'v'){
-        mp3.setVolume(30);
-        Serial.println("Volume Set to 30");
-      }else if(inChar == 'w'){
-        mp3.setVolume(25);
-        Serial.println("Volume Set to 25");
-      }else if(inChar == 'x'){
-        mp3.setVolume(20);
-        Serial.println("Volume Set to 20");
-      }else if(inChar == 'r'){
-        mp3.reset();
-        Serial.println("Device Reset");
-      }else if(inChar == 'P'){
-        mp3.resume();
-        Serial.println("Resume Play of Current File");
-      }else if(inChar == 'p'){
-        mp3.pause();
-        Serial.println("Pause Play of Current File");
-      }else if(inChar == 'D'){
-        byte i = mp3.getStatus();
+    String inString = Serial.readStringUntil('\n');
+      if(inString.startsWith("L") || inString.startsWith("l") ){
+          menu = 1;
+      }else if(inString.startsWith("C") || inString.startsWith("c")){
+          menu = 0;
+      }else if(inString.startsWith("D") || inString.startsWith("d")){
+        uint8_t i = mp3.getStatus();
         Serial.printf("Status: %u\n", i);
-      }else if(inChar == 's'){
+      }else if(inString.startsWith("S") || inString.startsWith("s")){
         mp3.stop();
         Serial.println("Current File Play Stopped");
+      }else if(inString.startsWith("P") || inString.startsWith("p")){
+        mp3.pause();
+        Serial.println("Play Paused");
+      }else if(inString.startsWith("R") || inString.startsWith("r")){
+        mp3.resume();
+        Serial.println("Play Resume");
+      }else if(inString.startsWith("$")){
+        mp3.reset();
+        Serial.println("Device Reset");
+      }else if(inString.startsWith("V") || inString.startsWith("v")){
+        String sub = inString.substring(1);
+        uint8_t vol = sub.toInt();
+        mp3.setVolume(vol);
+        Serial.printf("Volume Set to: %u\n", vol);
+      }else if(inString.startsWith("z") || inString.startsWith("Z")){        
+        String sub = inString.substring(1);
+        uint8_t file = sub.toInt();
+        mp3.playTrack(file);
+        Serial.printf("Root DIR File#: %u\n", file);
+      }else if(inString.startsWith("f") || inString.startsWith("F")){
+        String sub1 = inString.substring(1, 3);
+        String sub2 = inString.substring(3);
+        uint8_t fdr = sub1.toInt();
+        uint8_t file = sub2.toInt();
+        mp3.playFolder(fdr, file);
+        Serial.printf("Playing DIR: %u\tFile#: %u\n", fdr, file);
+      }else if(inString.startsWith("m") || inString.startsWith("M")){
+        String sub = inString.substring(1);
+        uint16_t file = sub.toInt();
+        mp3.playMP3Folder(file);
+        Serial.printf("Folder MP3 File#: %u\n", file);
+      }else if(inString.startsWith("a") || inString.startsWith("A")){
+        String sub = inString.substring(1);
+        uint16_t file = sub.toInt();
+        mp3.playAdvertFolder(file);
+        Serial.printf("Folder Advert File#: %u\n", file);
       }
+      print = true;
+      inString = "";
+      lastPeriod = millis();
   }
 }
