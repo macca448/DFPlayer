@@ -1,6 +1,10 @@
-### Added, Tested and Verified `Checksum` support for `MP3-TF-16P` to the DFPlayer library
-### Chip label `MH2004K-16SS` Manufacturer P/# GD3200B) 
-### Manufacturer: Guangzhou GuoDian Information Technology Co.,LTD.
+### This version of `DFPlayer` adds `CHECKSUM` support for modules using chip's as listed in table below.
+### The highlighted `GD3200B` being the `MH2004K-16SS` chip was what we Tested and Verified.
+### `Datasheet Authored by:` &nbsp;&nbsp;&nbsp;&nbsp; `Guangzhou GuoDian Information Technology Co., LTD.`
+
+<br>
+
+![alt text](https://github.com/macca448/DFPlayer/blob/main/images/supported_chips_chart.png)
 
 <br>
 
@@ -8,8 +12,10 @@
 
 <br>
 
-
-### See the `ESP_HW_Serial_MP3_TF_16P` in examples folder
+#### We used the label of the module tested as the macro to include in your setup
+> Note: All versions listed above should work with the `DFPLAYER_MP3_TF_16P` macro.
+> <br>
+> See `ESP_HW_Serial_MP3_TF_16P` in the examples folder (ESP Hardware Serial sketch)
 ```c++
 mp3.begin(MY_SERIAL, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 ```
@@ -30,15 +36,16 @@ mp3.begin(MY_SERIAL, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 
 
 #### TEST HARDWARE USED: 
-**ESP32 OR ESP8266 & RX2/TX2 HARDWARE SERIAL2 CONNECTION.**
+**ESP32 RX2/TX2 HARDWARE UART CONNECTION.**
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/MP3_TF_16P_ESP_wiring.png)
 <br>
 #### CAUTION:
 
 ```
-I found that on one of my ESP32 dev's the MP3-TF-16P would keep causing a RESET and
-restart the ESP when a file was asked to play. Using an external 5VDC PSU fixed the problem.
+I found that on one of my ESP32 dev's the MP3-TF-16P would keep causing a RESET
+when a file was asked to play. Using an external 5VDC PSU fixed the problem.
 ```
+
 <br>
 <br>
 
