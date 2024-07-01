@@ -19,6 +19,7 @@ mp3.begin(MY_SERIAL, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 * Folder numbering 01 to 99
 * MP3 and ADVERT Folder file numbering 0001 to 9999
 * See image for details of testing using the UART tool **`SSCOM3`** A copy is in the assets folder
+* If you want to test with the **`SSCOM3`** UART tool there is a spread-sheet that will calculate checksums in the assets folder. 
 
 <br>
 
