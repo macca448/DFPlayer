@@ -18,12 +18,12 @@ mp3.begin(MY_SERIAL, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 * File numbering 001 to 255 in root and folders
 * Folder numbering 01 to 99
 * MP3 and ADVERT Folder file numbering 0001 to 9999
-* See image for details
+* See image for details of testing using the UART tool **`SSCOM3`** A copy is in the assets folder
 
 <br>
 
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/file_and_directory_tree_naming.png)
-
+![alt text](https://github.com/macca448/DFPlayer/blob/main/images/SSCOM.jpg)
 
 <br>
 
