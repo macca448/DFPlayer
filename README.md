@@ -1,6 +1,6 @@
-### This library adds `checksum` support for `MP3-TF-16P` with chip `MH2004K-16SS` (Chip P/# GD3200B) 
+### Added, Tested and Verified `Checksum` support for `MP3-TF-16P` to the DFPlayer library
+### Chip label `MH2004K-16SS` Manufacturer P/# GD3200B) 
 ### Manufacturer: Guangzhou GuoDian Information Technology Co.,LTD.
-### Original Author of DFPlayer Library: [Enjoyneering's](https://github.com/enjoyneering/DFPlayer)
 
 <br>
 
@@ -45,6 +45,9 @@ restart the ESP when a file was asked to play. Using an external 5VDC PSU fixed 
 #### END MP3-TF-16P UPDATE
 <br>
 <br>
+
+#### Content below is by the original author [Enjoyneering's](https://github.com/enjoyneering/DFPlayer)
+
 <br>
 <br>
 <br>
