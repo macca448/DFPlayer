@@ -350,6 +350,7 @@ void DFPlayer::play3000Folder(uint16_t track)
   _sendData(DFPLAYER_PLAY_3000_FOLDER, (track >> 8), track);
 }
 
+/**************************************************************************/
 
 /**************************************************************************/
 /*
@@ -1122,13 +1123,7 @@ void DFPlayer::_sendData(uint8_t command, uint8_t dataMSB, uint8_t dataLSB)
     
     case DFPLAYER_MP3_TF_16P:
       checksum = 0xffff;    //0xFFFF, DON'T TOUCH!!!
-      val = ((_dataBuffer[5] & 0xFF) << 8) | _dataBuffer[6] & 0xFF;
-        #if (val < 1000)                                                /* When the file number is < 1000 */
-          checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5]);
-        #else                                                         /* When the file number is >= 1000 */
-          checksum -= ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5] + _dataBuffer[6]);
-        #endif
-      checksum += 1;
+      checksum = (checksum - ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5])) + 1;
       break;
 
     case DFPLAYER_NO_CHECKSUM:
