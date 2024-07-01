@@ -1,12 +1,33 @@
-### This fork of [Enjoyneering's](https://github.com/enjoyneering/DFPlayer) DFPlayer adds `checksum` support for the `MH2004K-16SS` chip based players 
-#### MODEL: `(MP3-TF-16P)`
+### This library adds `checksum` support for `MP3-TF-16P` with chip `MH2004K-16SS` (Chip P/# GD3200B) 
+### Manufacturer: Guangzhou GuoDian Information Technology Co.,LTD.
+### Original Author of DFPlayer Library: [Enjoyneering's](https://github.com/enjoyneering/DFPlayer)
+
+<br>
+
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/mh2024K_16SS.png)
-#### See `ESP_HW_Serial_MP3_TF_16P` example
+
+<br>
+
+
+### See the `ESP_HW_Serial_MP3_TF_16P` in examples folder
 ```c++
-mp3.begin(Serial2, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
+mp3.begin(MY_SERIAL, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 ```
-#### FEATURES:
-All features seem the same as as all the other models except the documentation for the chip suggests the **`MP3 & ADVERT'** folders support up to 0xFFFF (65,535) file count. Only tested with 0x03b8 (1000). I have included the original Chinese and Google translated datasheet PDF's in the assets folder.
+### FEATURES:
+#### Tested functions:
+* File numbering 001 to 255 in root and folders
+* Folder numbering 01 to 99
+* MP3 and ADVERT Folder file numbering 0001 to 9999
+* See image for details
+
+<br>
+
+![alt text](https://github.com/macca448/DFPlayer/blob/main/images/sd_file_tree.png)
+
+
+<br>
+
+
 #### TEST HARDWARE USED: 
 **ESP32 OR ESP8266 & RX2/TX2 HARDWARE SERIAL2 CONNECTION.**
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/MP3_TF_16P_ESP_wiring.png)
@@ -17,11 +38,9 @@ All features seem the same as as all the other models except the documentation f
 I found that on one of my ESP32 dev's the MP3-TF-16P would keep causing a RESET and
 restart the ESP when a file was asked to play. Using an external 5VDC PSU fixed the problem.
 ```
+<br>
+<br>
 
-#### TEST SD CARD FILE TREE
-![alt text](https://github.com/macca448/DFPlayer/blob/main/images/sd_file_tree.png)
-<br>
-<br>
 #### END MP3-TF-16P UPDATE
 <br>
 <br>
