@@ -30,6 +30,9 @@ mp3.begin(MY_SERIAL, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 
 <br>
 
+![alt text](https://github.com/macca448/DFPlayer/blob/main/images/file_and_directory_tree_naming.png)
+
+<br>
 
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/SSCOM.jpg)
 
