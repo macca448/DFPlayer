@@ -6,6 +6,7 @@
 
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/supported_chips_chart.png)
 
+
 <br>
 
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/mh2024K_16SS.png)
