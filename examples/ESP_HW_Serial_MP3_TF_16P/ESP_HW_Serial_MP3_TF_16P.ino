@@ -113,21 +113,21 @@ void printMenu(bool list){
     Serial.println("\n  FILE    MENU");
     Serial.println("  Send  = The Item");
     Serial.println("C || c  = Print Command List");
-    Serial.println("    z1  = Root DIR File 001"); 
-    Serial.println("    z2  = Root DIR File 002");
-    Serial.println("  z255  = Root DIR File 255");
-    Serial.println("  f011  = DIR 01 File 001");
-    Serial.println("  f012  = DIR 01 File 002");
-    Serial.println("f01255  = DIR 01 File 255");
-    Serial.println("  f991  = DIR 99 File 001");
-    Serial.println("  f992  = DIR 99 File 002");
-    Serial.println(" f99255 = DIR 99 File 255");
-    Serial.println("    m1  = DIR MP3 File 0001");
-    Serial.println(" m1000  = DIR MP3 File 1000");
-    Serial.println(" m9999  = DIR MP3 File 9999");
-    Serial.println("    a1  = DIR ADVERT File 0001");
-    Serial.println(" a1000  = DIR ADVERT File 1000");
-    Serial.println(" a9999  = DIR ADVERT File 9999\n");
+    Serial.println("    z1  = Root DIR File 001");        //file name "001 text.mp3"
+    Serial.println("    z2  = Root DIR File 002");        //file name "002 text.mp3"
+    Serial.println("    z3  = Root DIR File 003");        //file name "003 text.mp3"
+    Serial.println("  f011  = DIR 01 File 001");          //directory 01 the file name "001 text.mp3"
+    Serial.println("  f012  = DIR 01 File 002");          //directory 01 the file name "002 text.mp3"
+    Serial.println("f01255  = DIR 01 File 255");          //directory 01 the file name "255 text.mp3"
+    Serial.println("  f991  = DIR 99 File 001");          //directory 99 the file name "001 text.mp3"
+    Serial.println("  f992  = DIR 99 File 002");          //directory 99 the file name "002 text.mp3"
+    Serial.println(" f99255 = DIR 99 File 255");          //directory 01 the file name "255 text.mp3"
+    Serial.println("    m1  = DIR MP3 File 0001");        //directory mp3 the nfile name "0001 text.mp3"
+    Serial.println(" m1000  = DIR MP3 File 1000");        //directory mp3 the nfile name "1000 text.mp3"
+    Serial.println(" m9999  = DIR MP3 File 9999");        //directory mp3 the nfile name "9999 text.mp3"
+    Serial.println("    a1  = DIR ADVERT File 0001");     //directory advert the nfile name "0001 text.mp3"
+    Serial.println(" a1000  = DIR ADVERT File 1000");     //directory advert the nfile name "1000 text.mp3"
+    Serial.println(" a9999  = DIR ADVERT File 9999\n");   //directory advert the nfile name "9999 text.mp3"
   }else{
     Serial.println("\nCOMMAND   MENU");
     Serial.println("L || l  = Print File list");
