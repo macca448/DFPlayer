@@ -40,11 +40,9 @@ mp3.begin(MY_SERIAL, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false);
 ![alt text](https://github.com/macca448/DFPlayer/blob/main/images/MP3_TF_16P_ESP_wiring.png)
 <br>
 #### CAUTION:
-
-```
-I found that on one of my ESP32 dev's the MP3-TF-16P would keep causing a RESET
-when a file was asked to play. Using an external 5VDC PSU fixed the problem.
-```
+1. **Files in the ROOT need to be sequential IE: 001, 002, 003 etc to avoid wrong file playing**
+2. **I found that on one of my ESP32 dev's the MP3-TF-16P would keep causing a RESET
+when a file was asked to play. Using an external 5VDC PSU fixed the problem.**
 
 <br>
 <br>
