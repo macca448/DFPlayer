@@ -41,9 +41,9 @@
 #include <DFPlayer.h>
 
 #if defined (ESP32)
-  #define MP_SERIAL Serial2
+  #define MP_SERIAL Serial2            //ESP32 TX2 (GPIO17) / RX2 (GPIO16)
 #elif defined (ESP8266)
-  #define MP_SERIAL Serial1
+  #define MP_SERIAL Serial1            //ESP8266 TX1 (GPIO2) ONLY  IE No Feedback from Player
 #endif
 
 #define MP3_SERIAL_SPEED    9600 //DFPlayer Mini suport only 9600-baud
@@ -52,8 +52,7 @@
 uint32_t lastPeriod = 0;
 bool print = false, menu = 0;
 
-DFPlayer mp3;                    //connect DFPlayer RX-pin to GPIO15(TX) & DFPlayer TX-pin to GPIO13(RX)
-
+DFPlayer mp3;                    
 
 /**************************************************************************/
 /*
@@ -87,8 +86,8 @@ DFPlayer mp3;                    //connect DFPlayer RX-pin to GPIO15(TX) & DFPla
 /**************************************************************************/
 void setup()
 {
-  Serial.begin(115200);                       //Serial Monitor Input and Feedback
-  MP_SERIAL.begin(MP3_SERIAL_SPEED);            //ESP32 RX2(gpio16) TX2(gpio17)   ESP8266 RX2(gpio13) TX2(gpio15)
+  Serial.begin(115200);                                      //Serial Monitor Input and Feedback
+  MP_SERIAL.begin(MP3_SERIAL_SPEED, SERIAL_8N1);             //ESP32 RX2(gpio16) TX2(gpio17)   ESP8266 TX1 ONLY (gpio2)
 
   mp3.begin(MP_SERIAL, MP3_SERIAL_TIMEOUT, DFPLAYER_MP3_TF_16P, false); //"DFPLAYER_MP3_TF_16P" see NOTE, false=no feedback from module after the command
 
