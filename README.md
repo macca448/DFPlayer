@@ -1,3 +1,6 @@
+##
+### UPDATE: Added a needed delay after write for DFPLAYER_MP3_TF_16P
+##
 ### This version of `DFPlayer` adds `CHECKSUM` support for modules using chip's as listed in table below.
 ### The highlighted `GD3200B` being the `MH2004K-16SS` chip was what we Tested and Verified.
 ### `Datasheet Authored by:` &nbsp;&nbsp; `Guangzhou GuoDian Information Technology Co., LTD.`
