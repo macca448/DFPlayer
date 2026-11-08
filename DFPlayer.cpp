@@ -176,7 +176,53 @@ void DFPlayer::setSource(uint8_t source)
 
   if (source != 6) {delay(200);} //6=Sleep
 }
+/**************************************************************************/
+//Available
+int DFPlayer::listen() {
+  if (_serial->available() < 10) return -1;
 
+  if (_serial->peek() != 0x7E) {
+    _serial->read();
+    return -1;
+  }
+
+  // Use the class-level buffer
+  _serial->readBytes(_dataBuffer, 10);
+
+  // Validate Start and End bytes
+  if (_dataBuffer[0] != 0x7E || _dataBuffer[9] != 0xEF) return -1;
+
+  int16_t checksum = 0;
+  int16_t received = ((uint16_t)_dataBuffer[7] << 8) | _dataBuffer[8];
+
+  switch (_moduleType) {
+    
+    case DFPLAYER_MINI:
+    case DFPLAYER_HW_247A:
+      checksum = 0;        //0x0000, DON'T TOUCH!!!
+      checksum = checksum - _dataBuffer[1] - _dataBuffer[2] - _dataBuffer[3] - _dataBuffer[4] - _dataBuffer[5] - _dataBuffer[6];
+      break;
+
+    case DFPLAYER_FN_X10P:
+      checksum = 35535;    //0xFFFF, DON'T TOUCH!!!
+      checksum = checksum - _dataBuffer[1] - _dataBuffer[2] - _dataBuffer[3] - _dataBuffer[4] - _dataBuffer[5] - _dataBuffer[6] + 1;
+      break;
+
+    case DFPLAYER_MP3_TF_16P:
+      checksum = 0xFFFF;
+      checksum = checksum - ( _dataBuffer[1] + _dataBuffer[2] + _dataBuffer[3] + _dataBuffer[4] + _dataBuffer[5] + _dataBuffer[6] );
+      checksum += 1;
+      break;
+      
+    // ... other cases ...
+  }
+
+  if (_moduleType != DFPLAYER_NO_CHECKSUM && checksum != received) {
+    return -3; // Checksum mismatch
+  }
+
+  return _dataBuffer[3]; // Return the Command/Event ID
+}
 
 /**************************************************************************/
 /*
