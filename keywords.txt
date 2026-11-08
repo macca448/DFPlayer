@@ -49,6 +49,7 @@ wakeup	KEYWORD2
 enableStandby	KEYWORD2
 reset	KEYWORD2
 
+listen	KEYWORD2
 getStatus	KEYWORD2
 getVolume	KEYWORD2
 getEQ	KEYWORD2
