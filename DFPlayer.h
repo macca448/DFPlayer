@@ -100,7 +100,7 @@
 /* misc */
 #define DFPLAYER_BOOT_DELAY           3000 //average player boot time 1500sec..3000msec, depends on SD-card size
 #define DFPLAYER_CMD_DELAY            350  //average read command timeout 200msec..300msec for YX5200/AAxxxx chip & 350msec..500msec for GD3200B/MH2024K chip
-
+#define DFPLAYER_CHKSUM_ERROR         -3
 
 /* list of supported modules */
 typedef enum : uint8_t
@@ -159,6 +159,7 @@ class DFPlayer
    void enableStandby(bool enable, uint8_t source = 2);
    void reset();
 
+   int16_t  listen();
    uint8_t  getStatus();
    uint8_t  getVolume();
    uint8_t  getEQ();
